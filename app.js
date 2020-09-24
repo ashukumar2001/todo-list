@@ -95,25 +95,26 @@ function filterTodo(e) {
     })
 }
 
-function saveLocalTodos(todo) {
-    // CHECK -- hey do i already have thing in there?
+// Chicking do i have already some task in there
+function checkTodo() {
     let todos;
     if(localStorage.getItem('todos') == null) {
         todos = [];
+
     } else {
         todos = JSON.parse(localStorage.getItem("todos"));
     }
+    return todos;
+}
+function saveLocalTodos(todo) {
+
+    let todos = checkTodo();
     todos.push(todo);
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
 function getTodos() {
-    let todos;
-    if(localStorage.getItem('todos') == null) {
-        todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
+    let todos = checkTodo();
     todos.forEach(todo => {
         // todo div
     const todoDiv = document.createElement('div');
@@ -140,13 +141,7 @@ function getTodos() {
 }
 
 function removeLocalTodos(todo) {
-    // CHECK -- hey do i already have thing in there?
-    let todos;
-    if(localStorage.getItem('todos') == null) {
-        todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
+    let todos = checkTodo();
     const todoIndex = todo.children[0].innerText;
     todos.splice(todos.indexOf(todoIndex), 1);
     localStorage.setItem('todos', JSON.stringify(todos));
